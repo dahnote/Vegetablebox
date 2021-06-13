@@ -1,5 +1,6 @@
 <template>
   <div id="nav">
+    <button class="btn btn-lg btn-primary btn-block">test</button>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </div>
@@ -7,6 +8,7 @@
 </template>
 
 <style lang="scss">
+@import './assets/all';
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
