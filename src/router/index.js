@@ -7,6 +7,11 @@ const routes = [
     component: () => import('../views/Home.vue'),
     children: [
       {
+        path: '/login',
+        name: '後台登入',
+        component: () => import('../views/user/Login.vue'),
+      },
+      {
         path: '/products',
         name: '產品列表',
         component: () => import('../views/user/Products.vue'),
@@ -15,6 +20,17 @@ const routes = [
         path: '/cart',
         name: '購物車列表',
         component: () => import('../views/user/Cart.vue'),
+      },
+    ],
+  },
+  {
+    path: '/admin',
+    component: () => import('../views/Admin.vue'),
+    children: [
+      {
+        path: 'products',
+        name: '產品列表管理',
+        component: () => import('../views/admin/Products.vue'),
       },
     ],
   },
