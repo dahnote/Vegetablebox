@@ -44,12 +44,14 @@
             </tr>
           </tbody>
         </table>
-          <pagination :pagination=pagination :page=page @refesh="getData"></pagination>
-
+        <pagination :pagination=pagination :page=page @refesh="getData"></pagination>
     </div>
+    <deletemodal ref="deletemodal" @refesh="getData"></deletemodal>
+
 </template>
 <script>
 import pagination from '@/components/pagination.vue';
+import deletemodal from '@/components/deleteProduct.vue';
 
 export default {
   data() {
@@ -57,10 +59,14 @@ export default {
       productsData: {},
       pagination: {},
       page: 1,
+      delProductObj: {
+        productId: '',
+        productName: '',
+      },
     };
   },
   components: {
-    pagination,
+    pagination, deletemodal,
   },
   created() {
     this.getData();
@@ -84,6 +90,11 @@ export default {
         .catch((err) => {
           console.log(err.response);
         });
+    },
+    delModal(id, title) {
+      this.delProductObj.productId = id;
+      this.delProductObj.productName = title;
+      this.$refs.deletemodal.open(this.delProductObj);
     },
   },
 };
