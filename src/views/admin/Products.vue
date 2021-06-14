@@ -1,5 +1,10 @@
 <template>
     <div class="container">
+        <div class="text-end">
+          <button class="btn btn-primary" @click="callModal('create')">
+            建立新的產品
+          </button>
+        </div>
         <table class="table mt-4">
           <thead>
             <tr>
@@ -33,7 +38,7 @@
               </td>
               <td>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-outline-primary btn-sm" @click="editModal('edit',index)">
+                  <button type="button" class="btn btn-outline-primary btn-sm" @click="callModal('edit',index)">
                     編輯
                   </button>
                   <button type="button" class="btn btn-outline-danger btn-sm" @click="delModal(item.id,item.title)">
@@ -47,11 +52,12 @@
         <pagination :pagination=pagination :page=page @refesh="getData"></pagination>
     </div>
     <deletemodal ref="deletemodal" @refesh="getData"></deletemodal>
-
+    <productModal ref="productModal" :mode="mode" :edit-info="editInfo"></productModal>
 </template>
 <script>
 import pagination from '@/components/pagination.vue';
 import deletemodal from '@/components/deleteProduct.vue';
+import productModal from '@/components/productModal.vue';
 
 export default {
   data() {
@@ -63,10 +69,12 @@ export default {
         productId: '',
         productName: '',
       },
+      mode: '',
+      editInfo: {},
     };
   },
   components: {
-    pagination, deletemodal,
+    pagination, deletemodal, productModal,
   },
   created() {
     this.getData();
@@ -90,6 +98,21 @@ export default {
         .catch((err) => {
           console.log(err.response);
         });
+    },
+    callModal(item1, item2) {
+      this.mode = item1;
+      if (item1 === 'create') {
+        this.editInfo = {};
+        this.editInfo.imagesUrl = [];
+        this.editInfo.is_enabled = 0;
+      } else {
+        this.editInfo = { ...this.productsData[item2] };
+        if (this.editInfo.imagesUrl === undefined) {
+          this.editInfo.imagesUrl = [];
+        }
+        // this.productModal.show();
+      }
+      this.$refs.productModal.open();
     },
     delModal(id, title) {
       this.delProductObj.productId = id;
