@@ -49,6 +49,34 @@
                 rules="required" v-model="user.name"></Field>
                 <error-message name="姓名" class="invalid-feedback"></error-message>
               </div>
+              <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <Field id="email" name="email" type="email" class="form-control" :class="{ 'is-invalid': errors['email'] }" placeholder="請輸入 Email" rules="email|required" v-model="user.email"></Field>
+              <error-message name="email" class="invalid-feedback"></error-message>
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">電話</label>
+              <Field id="phone" name="電話" type="tel"
+              class="form-control" :class="{ 'is-invalid': errors['電話'] }"
+              placeholder="請輸入電話" rules="required|min:8|max:10" v-model="user.tel">
+              </Field>
+              <error-message name="電話" class="invalid-feedback"></error-message>
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">地址</label>
+              <Field id="address" name="地址" type="tel"
+              class="form-control" :class="{ 'is-invalid': errors['地址'] }"
+              placeholder="請輸入地址" rules="required" v-model="user.address">
+              </Field>
+              <error-message name="地址" class="invalid-feedback"></error-message>
+            </div>
+            <div class="mb-3">
+              <label for="message" class="form-label">留言</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" v-model="message"></textarea>
+            </div>
+            <div class="text-end">
+              <button type="submit" class="btn btn-danger">送出訂單</button>
+            </div>
             </Form>
         </div>
     </div>
@@ -137,7 +165,21 @@ export default {
         });
     },
     onSubmit() {
-
+      const postData = { user: this.user, message: this.message };
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`;
+      this.$http.post(url, { data: postData })
+        .then((res) => {
+          if (res.data.success) {
+            alert(res.data.message);
+            this.$refs.order.resetForm();
+            this.getCart();
+          } else {
+            alert(res.data.message);
+          }
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
     },
   },
 };
