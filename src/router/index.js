@@ -11,6 +11,11 @@ const routes = [
         name: '產品列表',
         component: () => import('../views/user/Products.vue'),
       },
+      {
+        path: '/cart',
+        name: '購物車列表',
+        component: () => import('../views/user/Cart.vue'),
+      },
     ],
   },
   {
