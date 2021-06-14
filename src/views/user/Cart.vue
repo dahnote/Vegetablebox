@@ -39,6 +39,18 @@
             </tr>
           </tfoot>
         </table>
+        <div class="my-5 row justify-content-center">
+          <div class="h2">預訂資料</div>
+            <Form ref="order" class="col-md-6" v-slot="{ errors }" @submit="onSubmit">
+              <div class="mb-3">
+                <label for="name" class="form-label">姓名</label>
+                <Field id="name" name="姓名" type="text" class="form-control"
+                :class="{ 'is-invalid': errors['姓名'] }" placeholder="請輸入姓名"
+                rules="required" v-model="user.name"></Field>
+                <error-message name="姓名" class="invalid-feedback"></error-message>
+              </div>
+            </Form>
+        </div>
     </div>
 </template>
 <script>
@@ -47,6 +59,13 @@ export default {
     return {
       cartData: {},
       final_total: 0,
+      user: {
+        name: '',
+        email: '',
+        tel: '',
+        address: '',
+      },
+      message: '',
     };
   },
   mounted() {
@@ -116,6 +135,9 @@ export default {
         .catch((err) => {
           console.log(err.response);
         });
+    },
+    onSubmit() {
+
     },
   },
 };
