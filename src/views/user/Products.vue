@@ -39,16 +39,23 @@
             </tr>
           </tbody>
         </table>
+        <infomodal ref="infoComponent"></infomodal>
         <!-- <pagination :pagination=pagination :page=page @refesh="getData"></pagination> -->
       </div>
 </template>
 
 <script>
+import infomodal from '@/components/infoModal.vue';
+
 export default {
   data() {
     return {
       productsData: [],
+      infoId: '',
     };
+  },
+  components: {
+    infomodal,
   },
   created() {
     this.getData();
@@ -76,6 +83,10 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    infoOpen(index) {
+      this.infoId = this.productsData[index].id;
+      this.$refs.infoComponent.open(this.infoId);
     },
   },
 };
