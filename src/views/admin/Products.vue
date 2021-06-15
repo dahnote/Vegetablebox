@@ -52,7 +52,7 @@
         <pagination :pagination=pagination :page=page @refesh="getData"></pagination>
     </div>
     <deletemodal ref="deletemodal" @refesh="getData"></deletemodal>
-    <productModal ref="productModal" :mode="mode" :edit-info="editInfo"></productModal>
+    <productModal ref="productModal" :mode="mode" :edit-info="editInfo" @refesh="getData"></productModal>
 </template>
 <script>
 import pagination from '@/components/pagination.vue';

@@ -139,6 +139,53 @@ export default {
     open() {
       this.modal.show();
     },
+    addImage() {
+      if (this.imagesUrl !== '') {
+        this.productInfo.imagesUrl.push(this.imagesUrl);
+        this.imagesUrl = '';
+      }
+    },
+    processingflow() {
+      if (this.mode === 'create') {
+        this.createProducet();
+      } else if (this.mode === 'edit') {
+        this.updateProducet();
+      }
+    },
+    createProducet() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`;
+      this.$http.post(url, { data: this.productInfo })
+        .then((res) => {
+          if (res.data.success) {
+            alert(res.data.message);
+            this.modal.hide();
+            this.$emit('refesh');
+          } else {
+            alert(res.data.message[0]);
+          }
+          // this.data.productsData=res.data.products;
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    },
+    updateProducet() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.editInfo.id}`;
+      this.$http.put(url, { data: this.productInfo })
+        .then((res) => {
+          if (res.data.success) {
+            alert(res.data.message);
+            this.modal.hide();
+            this.$emit('refesh');
+          } else {
+            alert(res.data.message[0]);
+          }
+          // this.data.productsData=res.data.products;
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    },
   },
 };
 </script>
