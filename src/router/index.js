@@ -7,19 +7,24 @@ const routes = [
     component: () => import('../views/Home.vue'),
     children: [
       {
-        path: '/login',
-        name: '後台登入',
-        component: () => import('../views/user/Login.vue'),
-      },
-      {
-        path: '/products',
+        path: '/',
         name: '產品列表',
         component: () => import('../views/user/Products.vue'),
       },
       {
-        path: '/cart',
+        path: 'login',
+        name: '後台登入',
+        component: () => import('../views/user/Login.vue'),
+      },
+      {
+        path: 'cart',
         name: '購物車列表',
         component: () => import('../views/user/Cart.vue'),
+      },
+      {
+        path: '/:pathMatch(.*)*',
+        name: 'NotFound',
+        component: () => import('../views/errorPage.vue'),
       },
     ],
   },
@@ -32,15 +37,12 @@ const routes = [
         name: '產品列表管理',
         component: () => import('../views/admin/Products.vue'),
       },
+      {
+        path: '/:pathMatch(.*)*',
+        name: 'NotFound',
+        component: () => import('../views/errorPage.vue'),
+      },
     ],
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
   },
 ];
 

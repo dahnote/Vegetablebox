@@ -1,6 +1,7 @@
 <template>
   <div id="nav">
-   <router-link to="/admin/products">後台產品列表</router-link>
+   <router-link to="/admin/products">後台產品列表</router-link> |
+   <router-link to="/">回到前台</router-link>
   </div>
   <router-view v-if="check"></router-view>
 </template>

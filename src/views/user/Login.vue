@@ -34,6 +34,9 @@ export default {
   },
   mounted() {
   },
+  created() {
+    this.checkCookie();
+  },
   methods: {
     onSubmit() {
       const url = `${process.env.VUE_APP_API}admin/signin`;
@@ -52,6 +55,18 @@ export default {
         .catch((err) => {
           console.log(err.response);
         });
+    },
+    checkCookie() {
+      const token = document.cookie.replace(/(?:(?:^|.*;\s*)mytoken\s*=\s*([^;]*).*$)|^.*$/, '$1');
+      if (token) {
+        const url = `${process.env.VUE_APP_API}api/user/check`;
+        this.$http.defaults.headers.common.Authorization = `${token}`;
+        this.$http.post(url, { api_token: token }).then((response) => {
+          if (response.data.success) {
+            this.$router.push('/admin/products');
+          }
+        });
+      }
     },
   },
 };
