@@ -21,7 +21,7 @@
               <td>
                 <div class="input-group input-group-sm">
                   <div class="input-group">
-                    <input v-model.number="item.qty" min="1" type="number" class="form-control" @blur=updataCart(index)>
+                    <input v-model.number="item.qty" min="1" type="number" class="form-control" @change=updataCart(index)>
                   </div>
                 </div>
               </td>
