@@ -11,7 +11,8 @@
         <div class="navbar-nav">
           <router-link to="/admin/products" class="nav-link">產品列表</router-link>
           <router-link to="/admin/orders" class="nav-link">訂單列表</router-link>
-           <router-link to="/" class="nav-link">回到前台</router-link> -->
+          <router-link to="/admin/coupons" class="nav-link">優惠券列表</router-link>
+          <router-link to="/" class="nav-link">回到前台</router-link> -->
           <!-- <a href="#" @click.prevent="logout" class="nav-link">登出</a> -->
         </div>
       </div>

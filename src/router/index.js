@@ -43,6 +43,11 @@ const routes = [
         component: () => import('../views/admin/Order.vue'),
       },
       {
+        path: 'coupons',
+        name: '優惠券',
+        component: () => import('../views/admin/Coupon.vue'),
+      },
+      {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: () => import('../views/errorPage.vue'),
