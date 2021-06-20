@@ -38,6 +38,11 @@ const routes = [
         component: () => import('../views/admin/Products.vue'),
       },
       {
+        path: 'orders',
+        name: '訂單管理',
+        component: () => import('../views/admin/Order.vue'),
+      },
+      {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: () => import('../views/errorPage.vue'),
