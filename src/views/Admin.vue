@@ -12,8 +12,8 @@
           <router-link to="/admin/products" class="nav-link">產品列表</router-link>
           <router-link to="/admin/orders" class="nav-link">訂單列表</router-link>
           <router-link to="/admin/coupons" class="nav-link">優惠券列表</router-link>
-          <router-link to="/" class="nav-link">回到前台</router-link> -->
-          <!-- <a href="#" @click.prevent="logout" class="nav-link">登出</a> -->
+          <router-link to="/" class="nav-link">回到前台</router-link>
+          <a href="#" @click.prevent="logout" class="nav-link">登出</a>
         </div>
       </div>
     </div>
@@ -51,6 +51,16 @@ export default {
         alert('您尚未登入。');
         this.$router.push('/login');
       }
+    },
+    logout() {
+      const api = `${process.env.VUE_APP_API}logout`;
+      this.$http.post(api)
+        .then((res) => {
+          alert(res.data.message);
+          if (res.data.success) {
+            this.$router.push('/');
+          }
+        });
     },
   },
 };

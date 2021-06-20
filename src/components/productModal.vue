@@ -21,6 +21,17 @@
                           v-model="productInfo.imageUrl">
                  </div>
                </div>
+               <div class="mb-1">
+                 <div class="form-group">
+                   <label for="imageUrl">上傳主要圖片</label>
+                   <input
+                    type="file"
+                    class="form-control"
+                    ref="file"
+                    @change="uploadFile"
+                  />
+                 </div>
+               </div>
                <img class="img-fluid" :src="productInfo.imageUrl" alt="">
                <div class="mb-1">
                  <div class="form-group">
@@ -151,6 +162,24 @@ export default {
       } else if (this.mode === 'edit') {
         this.updateProducet();
       }
+    },
+    uploadFile() {
+      const uploadedFile = this.$refs.file.files[0];
+      const formData = new FormData();
+      formData.append('file-to-upload', uploadedFile);
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`;
+      this.$http.post(url, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+        .then((res) => {
+          if (res.data.success) {
+            alert('上傳成功');
+            this.productInfo.imageUrl = res.data.imageUrl;
+            this.$refs.fileInput.value = '';
+          }
+        });
     },
     createProducet() {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`;
