@@ -1,7 +1,8 @@
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import { createApp } from 'vue';
-
+import Loading from 'vue3-loading-overlay';
+import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
 import {
   Form, Field, ErrorMessage, defineRule, configure,
 } from 'vee-validate';
@@ -30,4 +31,5 @@ app.use(VueAxios, axios);
 app.component('Form', Form);
 app.component('Field', Field);
 app.component('ErrorMessage', ErrorMessage);
+app.component('Loading', Loading);
 app.mount('#app');

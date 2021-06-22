@@ -100,8 +100,10 @@ export default {
   created() {
     this.getData();
   },
+  emits: { loadingpage: null },
   methods: {
     getData(item) {
+      this.$emit('loadingpage', true);
       if (item !== undefined) {
         this.page = item;
       }
@@ -115,6 +117,7 @@ export default {
               this.page -= 1;
             }
           }
+          this.$emit('loadingpage', false);
         })
         .catch((err) => {
           console.log(err.response);
@@ -132,6 +135,7 @@ export default {
       this.$refs.deleteModel.open();
     },
     deleteorder() {
+      this.$emit('loadingpage', true);
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${this.delobject.delId}`;
       this.$http.delete(url)
         .then((res) => {
@@ -141,8 +145,10 @@ export default {
             this.$refs.deleteModel.close();
             this.getData(this.page);
           }
+          this.$emit('loadingpage', false);
         })
         .catch((err) => {
+          this.$emit('loadingpage', false);
           console.log(err.response);
         });
     },
@@ -151,7 +157,7 @@ export default {
       return localDate.toLocaleDateString();
     },
     updateOrder(item) {
-      console.log(item);
+      this.$emit('loadingpage', true);
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`;
       this.$http.put(url, { data: item })
         .then((res) => {
@@ -161,8 +167,10 @@ export default {
           } else {
             alert(res.data.message);
           }
+          this.$emit('loadingpage', false);
         })
         .catch((err) => {
+          this.$emit('loadingpage', false);
           console.log(err);
         });
     },

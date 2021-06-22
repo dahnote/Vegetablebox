@@ -1,6 +1,7 @@
 <template>
    <div id="productModal" ref="productModal" class="modal fade" tabindex="-1" aria-labelledby="productModalLabel"
         aria-hidden="true">
+      <Loading :active="isLoading"  :z-index="1060"></Loading>
      <div class="modal-dialog modal-xl text-start">
        <div class="modal-content border-0">
          <div class="modal-header bg-dark text-white">
@@ -128,6 +129,7 @@ export default {
       imagesUrl: '',
       productInfo: {},
       productId: '',
+      isLoading: false,
     };
   },
   props: [
@@ -146,6 +148,7 @@ export default {
       backdrop: 'static',
     });
   },
+  emits: { refesh: null },
   methods: {
     open() {
       this.modal.show();
@@ -164,6 +167,7 @@ export default {
       }
     },
     uploadFile() {
+      this.isLoading = true;
       const uploadedFile = this.$refs.file.files[0];
       const formData = new FormData();
       formData.append('file-to-upload', uploadedFile);
@@ -178,13 +182,20 @@ export default {
             alert('上傳成功');
             this.productInfo.imageUrl = res.data.imageUrl;
             this.$refs.fileInput.value = '';
+            this.isLoading = false;
           }
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          console.log(err.response);
         });
     },
     createProducet() {
+      this.isLoading = true;
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`;
       this.$http.post(url, { data: this.productInfo })
         .then((res) => {
+          this.isLoading = false;
           if (res.data.success) {
             alert(res.data.message);
             this.modal.hide();
@@ -195,10 +206,12 @@ export default {
           // this.data.productsData=res.data.products;
         })
         .catch((err) => {
+          this.isLoading = false;
           console.log(err.response);
         });
     },
     updateProducet() {
+      this.isLoading = true;
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.editInfo.id}`;
       this.$http.put(url, { data: this.productInfo })
         .then((res) => {
@@ -209,9 +222,11 @@ export default {
           } else {
             alert(res.data.message[0]);
           }
+          this.isLoading = false;
           // this.data.productsData=res.data.products;
         })
         .catch((err) => {
+          this.isLoading = false;
           console.log(err.response);
         });
     },

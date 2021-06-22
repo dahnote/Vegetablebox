@@ -1,4 +1,5 @@
 <template>
+  <Loading :active="isLoading"  :z-index="666666666"></Loading>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-1">
     <div class="container-fluid">
       <a class="navbar-brand" href="#/admin/products">後台</a>
@@ -20,7 +21,7 @@
   </nav>
    <!-- <router-link to="/admin/products">後台產品列表</router-link> |
    <router-link to="/">回到前台</router-link> -->
-  <router-view v-if="check"></router-view>
+  <router-view v-if="check" @loadingpage="refesh"></router-view>
 </template>
 
 <script>
@@ -28,11 +29,13 @@ export default {
   data() {
     return {
       check: false,
+      isLoading: false,
     };
   },
   created() {
     this.checkCookie();
   },
+  // emits: { loadingpage: null },
   methods: {
     checkCookie() {
       const token = document.cookie.replace(/(?:(?:^|.*;\s*)mytoken\s*=\s*([^;]*).*$)|^.*$/, '$1');
@@ -61,6 +64,13 @@ export default {
             this.$router.push('/');
           }
         });
+    },
+    refesh(item) {
+      if (item) {
+        this.isLoading = true;
+      } else {
+        this.isLoading = false;
+      }
     },
   },
 };

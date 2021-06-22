@@ -71,11 +71,13 @@ export default {
       },
       mode: '',
       editInfo: {},
+      isLoading: true,
     };
   },
   components: {
     pagination, deletemodal, productModal,
   },
+  emits: { loadingpage: null },
   created() {
     this.getData();
   },
@@ -84,6 +86,8 @@ export default {
       if (item !== undefined) {
         this.page = item;
       }
+      this.$emit('loadingpage', true);
+      this.isLoading = true;
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/?page=${this.page}`;
       this.$http(url)
         .then((res) => {
@@ -93,9 +97,11 @@ export default {
             if (this.page > this.pagination.total_pages) {
               this.page -= 1;
             }
+            this.$emit('loadingpage', false);
           }
         })
         .catch((err) => {
+          this.isLoading = false;
           console.log(err.response);
         });
     },

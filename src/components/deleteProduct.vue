@@ -1,6 +1,7 @@
 <template>
    <div id="delProductModal" ref="delProductModal" class="modal fade" tabindex="-1"
         aria-labelledby="delProductModalLabel" aria-hidden="true">
+      <Loading :active="isLoading"  :z-index="1060"></Loading>
      <div class="modal-dialog">
        <div class="modal-content border-0">
          <div class="modal-header bg-danger text-white">
@@ -35,6 +36,7 @@ export default {
       modal: '',
       productId: '',
       productName: '',
+      isLoading: false,
     };
   },
   // props: [
@@ -55,6 +57,7 @@ export default {
       this.modal.show();
     },
     deleteProducet() {
+      this.isLoading = true;
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.productId}`;
       this.$http.delete(url)
         .then((res) => {
@@ -64,8 +67,10 @@ export default {
             this.modal.hide();
             this.$emit('refesh');
           }
+          this.isLoading = false;
         })
         .catch((err) => {
+          this.isLoading = false;
           console.log(err.response);
         });
     },

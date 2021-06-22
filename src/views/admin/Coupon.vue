@@ -101,11 +101,13 @@ export default {
   components: {
     pagination, couponInfo, deleteModel,
   },
+  emits: { loadingpage: null },
   created() {
     this.getData();
   },
   methods: {
     getData(item) {
+      this.$emit('loadingpage', true);
       if (item !== undefined) {
         this.page = item;
       }
@@ -119,8 +121,10 @@ export default {
               this.page -= 1;
             }
           }
+          this.$emit('loadingpage', false);
         })
         .catch((err) => {
+          this.$emit('loadingpage', false);
           console.log(err.response);
         });
     },
@@ -143,6 +147,7 @@ export default {
       this.$refs.deleteModel.open();
     },
     deleteCoupon() {
+      this.$emit('loadingpage', true);
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.delobject.delId}`;
       this.$http.delete(url)
         .then((res) => {
@@ -152,8 +157,10 @@ export default {
             this.$refs.deleteModel.close();
             this.getData(this.page);
           }
+          this.$emit('loadingpage', false);
         })
         .catch((err) => {
+          this.$emit('loadingpage', false);
           console.log(err.response);
         });
     },
@@ -179,6 +186,7 @@ export default {
       }
     },
     addCoupons(item) {
+      this.$emit('loadingpage', true);
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon`;
       this.$http.post(url, { data: item })
         .then((res) => {
@@ -189,13 +197,15 @@ export default {
           } else {
             alert(res.data.message);
           }
+          this.$emit('loadingpage', false);
         })
         .catch((err) => {
+          this.$emit('loadingpage', false);
           console.log(err);
         });
     },
     updateCoupons(item) {
-      console.log('123');
+      this.$emit('loadingpage', true);
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupon/${item.id}`;
       this.$http.put(url, { data: item })
         .then((res) => {
@@ -208,8 +218,10 @@ export default {
           } else {
             alert(res.data.message);
           }
+          this.$emit('loadingpage', false);
         })
         .catch((err) => {
+          this.$emit('loadingpage', false);
           console.log(err);
         });
     },
