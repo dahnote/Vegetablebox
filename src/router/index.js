@@ -21,11 +21,6 @@ const routes = [
         name: '購物車列表',
         component: () => import('../views/user/Cart.vue'),
       },
-      {
-        path: '/:pathMatch(.*)*',
-        name: 'NotFound',
-        component: () => import('../views/errorPage.vue'),
-      },
     ],
   },
   {
@@ -47,12 +42,12 @@ const routes = [
         name: '優惠券',
         component: () => import('../views/admin/Coupon.vue'),
       },
-      {
-        path: '/:pathMatch(.*)*',
-        name: 'NotFound',
-        component: () => import('../views/errorPage.vue'),
-      },
     ],
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: () => import('../views/errorPage.vue'),
   },
 ];
 

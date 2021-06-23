@@ -56,8 +56,8 @@
 </template>
 <script>
 import pagination from '@/components/pagination.vue';
-import deletemodal from '@/components/deleteProduct.vue';
-import productModal from '@/components/productModal.vue';
+import deletemodal from '@/components/admin/deleteProduct.vue';
+import productModal from '@/components/admin/productModal.vue';
 
 export default {
   data() {
